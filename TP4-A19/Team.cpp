@@ -3,43 +3,55 @@
 Team::Team(std::string name)
 {
 	// A Completer
+	m_name = name;
 }
 
-Team::Team(const Team & mdd)
+Team::Team(const Team & mdd) 
 {
 	// A Completer (constructeur de copie)
+	m_name = mdd.m_name;
+	m_image = mdd.m_image;
+	m_members = mdd.m_members;
 }
 
 Team * Team::clone(void) const
 {
 	// A Completer (créer un nouvel objet identique a this)
+	return new Team(*this);
 }
 
 const QImage & Team::getImage(void) const
 {
 	// A Completer
+	return m_image;
 }
 
 QImage & Team::getImage(void)
 {
 	// A Completer
+	return m_image;
 }
 
 std::string Team::getName(void) const
 {
 	// A Completer
+	return m_name;
 }
 
 void Team::setName(std::string name)
 {
 	// A Completer
+	m_name = name;
 }
 
 AbsTeamComponent& Team::addTeamComponent(const AbsTeamComponent & member)
 {
 	// A Completer: Ajouter un nouvel element dans la liste et le clonant et
 	// retrourner une reference a l'objet insere dans la liste
-	return ;
+	TeamComponentPtr m_member = std::unique_ptr(member);
+	m_members.push_back(TeamComponentPtr(member));
+
+	return member;
 }
 
 TeamComponentIterator Team::begin()
