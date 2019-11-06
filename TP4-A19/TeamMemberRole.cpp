@@ -23,8 +23,7 @@ TeamMemberRole::TeamMemberRole(const TeamMemberRole & mdd)
 TeamMemberRole * TeamMemberRole::clone(void) const
 {
 	// A Completer
-	TeamMemberRole * newTeamMemberRole = new TeamMemberRole(*this);
-	return newTeamMemberRole;
+	return new TeamMemberRole(*this);
 }
 
 const QImage & TeamMemberRole::getImage(void) const
