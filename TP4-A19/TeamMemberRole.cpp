@@ -23,65 +23,80 @@ TeamMemberRole::TeamMemberRole(const TeamMemberRole & mdd)
 TeamMemberRole * TeamMemberRole::clone(void) const
 {
 	// A Completer
+	TeamMemberRole * newTeamMemberRole = new TeamMemberRole(*this);
+	return newTeamMemberRole;
 }
 
 const QImage & TeamMemberRole::getImage(void) const
 {
 	// A Completer
+	return m_image;
 }
 
 QImage & TeamMemberRole::getImage(void)
 {
 	// A Completer
+	return m_image;
 }
 
 std::string TeamMemberRole::getName(void) const
 {
 	// A Completer
+	return m_member.get()->getName();
 }
 
 void TeamMemberRole::setName(std::string name)
 {
 	// A Completer
+	m_member.get()->setName(name);
 }
 
 std::string TeamMemberRole::getRole(void) const
 {
 	// A Completer
+	return m_role;
+
 }
 
 void TeamMemberRole::setRole(std::string role)
 {
 	// A Completer
+	m_role = role;
 }
 
 AbsTeamComponent& TeamMemberRole::addTeamComponent(const AbsTeamComponent& child)
 {
 	// A Completer : deleguer a l'objet membre
+	return m_member.get()->addTeamComponent(child);
 }
 
 TeamComponentIterator TeamMemberRole::begin()
 {
 	// A Completer : deleguer a l'objet membre
+	return m_member.get()->begin();
 }
 
 TeamComponentIterator_const TeamMemberRole::cbegin() const
 {
 	// A Completer : deleguer a l'objet membre
+	return m_member.get()->cbegin();
 }
 
 TeamComponentIterator_const TeamMemberRole::cend() const
 {
 	// A Completer : deleguer a l'objet membre
+	return m_member.get()->cend();
 }
 
 TeamComponentIterator TeamMemberRole::end()
 {
 	// A Completer : deleguer a l'objet membre
+	return m_member.get()->end();
 }
 
 void TeamMemberRole::deleteTeamComponent(TeamComponentIterator_const child)
 {
 	// A Completer : deleguer a l'objet membre
+	m_member.get()->deleteTeamComponent(child);
 }
 
