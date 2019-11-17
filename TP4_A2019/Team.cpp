@@ -85,11 +85,12 @@ TeamComponentIterator Team::end()
 void Team::deleteTeamComponent(TeamComponentIterator_const child)
 {
 	// A Completer: eliminer de la liste l'element indique par l'iterateur
-	for (auto it = m_members.begin(); it != m_members.end(); ++it) {
+	m_members.erase(child);
+	/*for (auto it = m_members.begin(); it != m_members.end(); ++it) {
 		if (it == child) {
 			m_members.erase(it);
 		}
-	}
+	}*/
 }
 
 void Team::deleteAllComponents(void)

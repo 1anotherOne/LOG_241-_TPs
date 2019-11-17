@@ -16,8 +16,9 @@ TeamMemberRole::TeamMemberRole(std::string name, const class QImage& photo, std:
 }
 
 TeamMemberRole::TeamMemberRole(const TeamMemberRole & mdd)
-	: m_member(mdd.m_member->clone()), m_role(mdd.m_role), m_image(mdd.m_image)
+	: m_member(std:: make_unique(mdd.m_member)), m_role(mdd.m_role), m_image(mdd.m_image)
 {
+	//m_member(mdd.m_member->clone()), m_role(mdd.m_role), m_image(mdd.m_image)
 }
 
 TeamMemberRole * TeamMemberRole::clone(void) const
@@ -96,6 +97,8 @@ TeamComponentIterator TeamMemberRole::end()
 void TeamMemberRole::deleteTeamComponent(TeamComponentIterator_const child)
 {
 	// A Completer : deleguer a l'objet membre
-	m_member.get()->deleteTeamComponent(child);
+	//m_member.get()->deleteTeamComponent(child);
+	//delete m_member.release();
+	m_member.reset(NULL);
 }
 
