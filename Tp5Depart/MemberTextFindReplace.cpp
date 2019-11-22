@@ -27,11 +27,12 @@ void MemberTextFindReplace::processTeamMember(TeamMember & member)
 
 	if (member.getName() == m_findString) {
 		m_currentMember = member.begin();
+		
 	}
 	if (m_doReplace) {
-		member.setName(m_replaceString);
+		m_currentMember->setName(m_replaceString);
 	}
-
+	m_result.push_back(m_currentMember);
 }
 
 void MemberTextFindReplace::processTeamMemberRole(TeamMemberRole & member)
@@ -43,12 +44,12 @@ void MemberTextFindReplace::processTeamMemberRole(TeamMemberRole & member)
 	//           proceder au remplacement
 	if (member.getRole() == m_findString) {
 		m_currentMember = member.begin();
+		
 	}
-
+	
 	if (m_doReplace) {
 		member.setRole(m_replaceString);
 	}
-
 	// Pour traiter le nom, on delegue au membre
 	member.getMember().accept(*this);
 }
