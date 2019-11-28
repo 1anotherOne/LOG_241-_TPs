@@ -29,9 +29,44 @@ CommandTranslate::CommandTranslate(AbsTeamComponent & component, TargetLanguage 
 void CommandTranslate::cancel()
 {
 	// Construire un visiteur de traduction et l'appliquer a la composante dans le sens inverse
+	MemberTextFindReplace replace(&translations[0].second, &translations[0].first);
+
+	
+
+	for (int i = 0; i < translationsCount; i++)
+	{
+		
+		if (m_language == TargetLanguage::English_t) {
+			replace.setStrings(&translations[i].second, &translations[i].first);
+		}
+		else {
+			replace.setStrings(&translations[i].first, &translations[i].second);
+		}
+
+		m_target.accept(replace);
+
+	}
 }
 
 void CommandTranslate::execute()
 {
 	// Construire un visiteur de traduction et l'appliquer a la composante
+
+	MemberTextFindReplace replace(&translations[0].first, &translations[0].second);
+
+	
+
+	for (int i = 0; i < translationsCount; i++)
+	{
+
+		if (m_language == TargetLanguage::English_t) {
+			replace.setStrings(&translations[i].first, &translations[i].second);
+		}
+		else {
+			replace.setStrings(&translations[i].second, &translations[i].first);
+		}
+
+		m_target.accept(replace);
+
+	}
 }

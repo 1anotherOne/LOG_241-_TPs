@@ -23,16 +23,21 @@ void MemberTextFindReplace::processTeamMember(TeamMember & member)
 	//      si on doit remplacer la chaine
 	//           proceder au remplacement
 
+	std::string name = member.getName();
+	size_t index = member.getName().find(m_findString);
 	
 
-	if (member.getName() == m_findString) {
+	if (index != std::string::npos) {
 		m_currentMember = member.begin();
+		m_result.push_back(member.begin());//maybe
 		
+
+		if (m_doReplace) {
+			name.erase(index, m_findString.length());
+			name.insert(index, m_replaceString);
+			member.setName(name);
+		}
 	}
-	if (m_doReplace) {
-		m_currentMember->setName(m_replaceString);
-	}
-	m_result.push_back(m_currentMember);
 }
 
 void MemberTextFindReplace::processTeamMemberRole(TeamMemberRole & member)
@@ -42,24 +47,35 @@ void MemberTextFindReplace::processTeamMemberRole(TeamMemberRole & member)
 	//      stocker l'iterateur sur le membre courant
 	//      si on doit remplacer la chaine
 	//           proceder au remplacement
-	if (member.getRole() == m_findString) {
-		m_currentMember = member.begin();
-		
-	}
-	
-	if (m_doReplace) {
-		member.setRole(m_replaceString);
-	}
+
 	// Pour traiter le nom, on delegue au membre
+
+	std::string role = member.getRole();
+	size_t index = member.getRole().find(m_findString);
+
+	if (member.getRole().find(m_findString) != std::string::npos) {
+		m_currentMember = member.begin();
+		m_result.push_back(member.begin());//maybe
+
+		if (m_doReplace) {
+			role.erase(index, m_findString.length());
+			role.insert(index, m_replaceString);
+			member.setRole(role);
+		}
+	}
+
 	member.getMember().accept(*this);
+
 }
 
 void MemberTextFindReplace::processTeam(Team & team)
 {
 	// Pour traiter une equipe, on itere sur tous les membres en conservant dans le 
 	// visiteur l'iterateur sur le composant courant en train d'etre visite
+
 	auto it = team.begin();
-	for (; it != team.end(); ++it) {
+
+	for (; it != team.cend(); ++it) {
 		it->accept(*this);
 	}
 }
@@ -73,9 +89,10 @@ void MemberTextFindReplace::setStrings(const std::string * find_s, const std::st
 	m_findString = *find_s;
 
 	if (replace_s != NULL) {
-		m_replaceString = *replace_s;
 		m_doReplace = true;
+		m_replaceString = *replace_s;
 	}
+
 }
 
 std::string MemberTextFindReplace::findString(void) const
@@ -99,11 +116,13 @@ bool MemberTextFindReplace::doReplace(void) const
 TeamComponentIteratorContainer MemberTextFindReplace::searchResult(void) const
 {
 	// Retourner les iterateurs sur les composantes trouvees ou modifiees
+	
 	return m_result;
 }
 
 void MemberTextFindReplace::clearSearch(void)
 {
 	// Vider la liste des iterateurs sur les composantes trouvees ou modifiees
+
 	m_result.clear();
 }
